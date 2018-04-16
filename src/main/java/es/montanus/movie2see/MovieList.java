@@ -2,6 +2,7 @@ package es.montanus.movie2see;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Vector;
 
 public class MovieList {
     private Collection<Movie> movies = new ArrayList<Movie>();
@@ -16,5 +17,9 @@ public class MovieList {
 
     public boolean contains(Movie movieToCheckFor) {
         return movies.contains(movieToCheckFor);
+    }
+
+    public Vector<Movie> toVector() {
+        return new Vector<Movie>(movies);
     }
 }

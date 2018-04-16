@@ -10,7 +10,7 @@ public class TestMovieListWithOneMovie extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         movieList = new MovieList();
-        movieList.add(new Movie());
+        movieList.add(new Movie("Movie Name"));
     }
 
     public void testSizeShouldBeOne() {

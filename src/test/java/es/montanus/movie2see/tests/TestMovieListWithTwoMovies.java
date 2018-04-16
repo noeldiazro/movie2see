@@ -12,8 +12,8 @@ public class TestMovieListWithTwoMovies extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         movieList = new MovieList();
-        starWars = new Movie();
-        starTrek = new Movie();
+        starWars = new Movie("Star Wars");
+        starTrek = new Movie("Star Trek");
         movieList.add(starWars);
         movieList.add(starTrek);
     }
@@ -28,7 +28,7 @@ public class TestMovieListWithTwoMovies extends TestCase {
     }
 
     public void testShouldNotContainMovieThatWasNotAdded() {
-        Movie stargate = new Movie();
+        Movie stargate = new Movie("Stargate");
         assertFalse(movieList.contains(stargate));
     }
 
