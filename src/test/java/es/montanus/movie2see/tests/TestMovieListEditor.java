@@ -13,26 +13,55 @@ import java.util.Vector;
 public class TestMovieListEditor extends TestCase {
     private Movie starWars;
     private Movie starTrek;
+    private Movie lostInSpace;
 
     public void setUp() throws Exception {
         super.setUp();
         starWars = new Movie("Star Wars");
         starTrek = new Movie("Star Trek");
+        lostInSpace = new Movie("Lost in Space");
     }
 
     public void testList() {
-
-        MovieList movieList = getMovieList();
-
         MockControl control = EasyMock.controlFor(MovieListEditorView.class);
         MovieListEditorView mockView = (MovieListEditorView)control.getMock();
 
         mockView.setMovies(getMovieVector());
         control.setVoidCallable(1);
+        mockView.setEditor(null);
+        control.setDefaultVoidCallable();
 
+        MovieList movieList = getMovieList();
         control.activate();
         new MovieListEditor(movieList, mockView);
         control.verify();
+    }
+
+    public void testAdding() {
+        MockControl control = EasyMock.controlFor(MovieListEditorView.class);
+        MovieListEditorView mockView = (MovieListEditorView)control.getMock();
+
+
+        mockView.setMovies(getMovieVector());
+        control.setVoidCallable(1);
+        mockView.setEditor(null);
+        control.setDefaultVoidCallable();
+        mockView.getNewName();
+        control.setReturnValue("Lost in Space");
+        mockView.setMovies(getMovieVectorWithAddition());
+        control.setVoidCallable(1);
+
+        MovieList movieList = getMovieList();
+        control.activate();
+        MovieListEditor editor = new MovieListEditor(movieList, mockView);
+        editor.add();
+        control.verify();
+    }
+
+    private Vector<Movie> getMovieVectorWithAddition() {
+        Vector<Movie> result = getMovieVector();
+        result.add(lostInSpace);
+        return result;
     }
 
     private Vector<Movie> getMovieVector() {

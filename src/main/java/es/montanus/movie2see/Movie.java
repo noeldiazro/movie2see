@@ -15,4 +15,17 @@ public class Movie {
     public String toString() {
         return name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return name == movie.name;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }

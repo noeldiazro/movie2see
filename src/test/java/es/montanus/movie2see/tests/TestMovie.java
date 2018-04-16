@@ -5,19 +5,20 @@ import junit.framework.TestCase;
 
 public class TestMovie extends TestCase {
 
+    private static final String STAR_WARS = "Star Wars";
     private Movie starWars;
 
     public void setUp() throws Exception {
         super.setUp();
-        starWars = new Movie("Star Wars");
+        starWars = new Movie(STAR_WARS);
     }
 
     public void testName() {
-        assertEquals("Star Wars", starWars.getName());
+        assertEquals(STAR_WARS, starWars.getName());
     }
 
     public void testToString() {
-        assertEquals("Star Wars", starWars.toString());
+        assertEquals(STAR_WARS, starWars.toString());
     }
 
     public static void main(String[] args) {
