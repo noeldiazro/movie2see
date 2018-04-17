@@ -11,7 +11,9 @@ public class MovieList {
         return movies.size();
     }
 
-    public void add(Movie movieToAdd) {
+    public void add(Movie movieToAdd) throws DuplicateMovieException {
+        checkDuplicate(movieToAdd);
+
         movies.add(movieToAdd);
     }
 
@@ -25,5 +27,16 @@ public class MovieList {
 
     public Movie get(int index) {
         return movies.get(index);
+    }
+
+    public void rename(Movie movie, String newName) throws DuplicateMovieException {
+        checkDuplicate(new Movie(newName));
+
+        movie.rename(newName);
+    }
+
+    private void checkDuplicate(Movie movie) throws DuplicateMovieException {
+        if (contains(movie))
+            throw new DuplicateMovieException(movie);
     }
 }

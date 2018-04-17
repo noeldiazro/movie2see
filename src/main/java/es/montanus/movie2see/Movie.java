@@ -23,7 +23,7 @@ public class Movie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return name == movie.name;
+        return name.equals(movie.getName());
     }
 
     @Override

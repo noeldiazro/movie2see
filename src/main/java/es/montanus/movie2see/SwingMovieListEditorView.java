@@ -14,9 +14,7 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
     private MovieListEditor editor;
     private JTextField movieField;
 
-    public SwingMovieListEditorView() {
-        init();
-        setVisible(true);
+    private SwingMovieListEditorView() {
     }
 
     public void setMovies(Vector<Movie> movies) {
@@ -93,6 +91,19 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
             }
         });
         getContentPane().add(updateButton);
+    }
+
+    public static SwingMovieListEditorView start() {
+        SwingMovieListEditorView window = new SwingMovieListEditorView();
+        window.init();
+        window.setVisible(true);
+        return window;
+    }
+
+    public static void main(String[] args) {
+        SwingMovieListEditorView window = SwingMovieListEditorView.start();
+        MovieList list = new MovieList();
+        new MovieListEditor(list, window);
     }
 
 }
