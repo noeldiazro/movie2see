@@ -1,10 +1,12 @@
 package es.montanus.movie2see;
 
 public class Movie {
-    private final String name;
+    public static final String NULL_NAME_MSG = "Movie name can't be null";
+    public static final String EMPTY_NAME_MSG = "Movie name can't be empty";
+    private String name;
 
     public Movie(String name) {
-        this.name = name;
+        setName(name);
     }
 
     public String getName() {
@@ -27,5 +29,25 @@ public class Movie {
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    public void rename(String newName) {
+        setName(newName);
+    }
+
+    private void setName(String name) {
+        checkNull(name);
+        checkEmpty(name);
+        this.name = name;
+    }
+
+    private void checkNull(String name) throws IllegalArgumentException {
+        if (name == null)
+            throw new IllegalArgumentException(NULL_NAME_MSG);
+    }
+
+    private void checkEmpty(String name) {
+        if (name.isEmpty())
+            throw new IllegalArgumentException(EMPTY_NAME_MSG);
     }
 }

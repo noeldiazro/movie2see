@@ -6,19 +6,65 @@ import junit.framework.TestCase;
 public class TestMovie extends TestCase {
 
     private static final String STAR_WARS = "Star Wars";
-    private Movie starWars;
+    private Movie movie;
 
     public void setUp() throws Exception {
         super.setUp();
-        starWars = new Movie(STAR_WARS);
+        movie = new Movie(STAR_WARS);
     }
 
     public void testName() {
-        assertEquals(STAR_WARS, starWars.getName());
+        assertEquals(STAR_WARS, movie.getName());
     }
 
     public void testToString() {
-        assertEquals(STAR_WARS, starWars.toString());
+        assertEquals(STAR_WARS, movie.toString());
+    }
+
+    public void testRenaming() {
+        final String newName = "Star Trek";
+        movie.rename(newName);
+        assertEquals(newName, movie.getName());
+    }
+
+    public void testMovieCreationWithNullNameShouldThrowIllegalArgumentException() {
+        try {
+            new Movie(null);
+            fail();
+        }
+        catch (IllegalArgumentException expected) {
+            assertEquals(Movie.NULL_NAME_MSG, expected.getMessage());
+        }
+    }
+
+    public void testMovieCreationWithEmptyNameThrowsIllegalArgumentException() {
+        try {
+            new Movie("");
+            fail();
+        }
+        catch (IllegalArgumentException expected) {
+            assertEquals(Movie.EMPTY_NAME_MSG, expected.getMessage());
+        }
+    }
+
+    public void testNullRename() {
+        try {
+            movie.rename(null);
+            fail();
+        }
+        catch (IllegalArgumentException expected) {
+            assertEquals(Movie.NULL_NAME_MSG, expected.getMessage());
+        }
+    }
+
+    public void testEmptyRename() {
+        try {
+            movie.rename("");
+            fail();
+        }
+        catch (IllegalArgumentException expected) {
+            assertEquals(Movie.EMPTY_NAME_MSG, expected.getMessage());
+        }
     }
 
     public static void main(String[] args) {
