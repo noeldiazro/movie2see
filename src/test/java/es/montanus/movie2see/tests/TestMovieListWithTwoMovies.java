@@ -32,6 +32,11 @@ public class TestMovieListWithTwoMovies extends TestCase {
         assertFalse(movieList.contains(stargate));
     }
 
+    public void testGetMovie() {
+        assertEquals(starWars, movieList.get(0));
+        assertEquals(starTrek, movieList.get(1));
+    }
+
     public static void main(String[] args) {
         junit.textui.TestRunner.run(TestMovieListWithTwoMovies.class);
     }

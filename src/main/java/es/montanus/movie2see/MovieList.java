@@ -1,11 +1,11 @@
 package es.montanus.movie2see;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.Vector;
 
 public class MovieList {
-    private Collection<Movie> movies = new ArrayList<Movie>();
+    private List<Movie> movies = new ArrayList<Movie>();
 
     public int size() {
         return movies.size();
@@ -21,5 +21,9 @@ public class MovieList {
 
     public Vector<Movie> toVector() {
         return new Vector<Movie>(movies);
+    }
+
+    public Movie get(int index) {
+        return movies.get(index);
     }
 }

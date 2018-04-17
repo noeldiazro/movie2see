@@ -1,6 +1,8 @@
 package es.montanus.movie2see;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,12 +31,18 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
         this.editor = editor;
     }
 
+    @Override
+    public void setNewName(String newName) {
+        movieField.setText(newName);
+    }
+
     private void init() {
         setTitle();
         setLayout();
         initList();
         initField();
         initAddButton();
+        initUpdateButton();
         pack();
     }
 
@@ -48,6 +56,13 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
 
     private void initList() {
         movieList = new JList();
+        movieList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        movieList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                editor.select(movieList.getSelectedIndex());
+            }
+        });
         JScrollPane scroller = new JScrollPane(movieList,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -67,6 +82,17 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
             }
         });
         getContentPane().add(addButton);
+    }
+
+    private void initUpdateButton() {
+        JButton updateButton = new JButton("Update");
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editor.update();
+            }
+        });
+        getContentPane().add(updateButton);
     }
 
 }

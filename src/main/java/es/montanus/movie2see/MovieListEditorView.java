@@ -6,4 +6,5 @@ public interface MovieListEditorView {
     void setMovies(Vector<Movie> movies);
     String getNewName();
     void setEditor(MovieListEditor editor);
+    void setNewName(String newName);
 }

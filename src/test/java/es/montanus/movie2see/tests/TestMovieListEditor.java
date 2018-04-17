@@ -14,46 +14,38 @@ public class TestMovieListEditor extends TestCase {
     private Movie starWars;
     private Movie starTrek;
     private Movie lostInSpace;
+    private MockControl control;
+    private MovieListEditorView mockView;
 
     public void setUp() throws Exception {
         super.setUp();
         starWars = new Movie("Star Wars");
         starTrek = new Movie("Star Trek");
         lostInSpace = new Movie("Lost in Space");
-    }
 
-    public void testList() {
-        MockControl control = EasyMock.controlFor(MovieListEditorView.class);
-        MovieListEditorView mockView = (MovieListEditorView)control.getMock();
+        control = EasyMock.controlFor(MovieListEditorView.class);
+        mockView = (MovieListEditorView) control.getMock();
 
         mockView.setMovies(getMovieVector());
         control.setVoidCallable(1);
         mockView.setEditor(null);
         control.setDefaultVoidCallable();
+    }
 
-        MovieList movieList = getMovieList();
+    public void testList() {
         control.activate();
-        new MovieListEditor(movieList, mockView);
+        new MovieListEditor(getMovieList(), mockView);
         control.verify();
     }
 
     public void testAdding() {
-        MockControl control = EasyMock.controlFor(MovieListEditorView.class);
-        MovieListEditorView mockView = (MovieListEditorView)control.getMock();
-
-
-        mockView.setMovies(getMovieVector());
-        control.setVoidCallable(1);
-        mockView.setEditor(null);
-        control.setDefaultVoidCallable();
         mockView.getNewName();
         control.setReturnValue("Lost in Space");
         mockView.setMovies(getMovieVectorWithAddition());
         control.setVoidCallable(1);
 
-        MovieList movieList = getMovieList();
         control.activate();
-        MovieListEditor editor = new MovieListEditor(movieList, mockView);
+        MovieListEditor editor = new MovieListEditor(getMovieList(), mockView);
         editor.add();
         control.verify();
     }
@@ -77,4 +69,42 @@ public class TestMovieListEditor extends TestCase {
         movieList.add(starTrek);
         return movieList;
     }
+
+    public void testSelecting() {
+        mockView.setNewName("Star Trek");
+        control.setVoidCallable(1);
+        mockView.setNewName("Star Wars");
+        control.setVoidCallable(1);
+
+        control.activate();
+        MovieListEditor editor = new MovieListEditor(getMovieList(), mockView);
+        editor.select(1);
+        editor.select(0);
+        control.verify();
+    }
+
+
+    /*
+    public void testUpdating() {
+        Vector<Movie> newMovies = new Vector<Movie>();
+        newMovies.add(starWars);
+        newMovies.add(new Movie("Star Trek I"));
+
+
+        mockView.setNewName("Star Trek");
+        control.setVoidCallable(1);
+
+        mockView.getNewName();
+        control.setReturnValue("Star Trek I", 1);
+
+        mockView.setMovies(newMovies);
+        control.setVoidCallable(1);
+
+        control.activate();
+        MovieListEditor editor = new MovieListEditor(getMovieList(), mockView);
+        editor.select(1);
+        editor.update();
+        control.verify();
+    }
+    */
 }

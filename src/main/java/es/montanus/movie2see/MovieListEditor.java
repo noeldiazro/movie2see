@@ -1,11 +1,10 @@
 package es.montanus.movie2see;
 
-import java.util.Vector;
-
 public class MovieListEditor {
 
     private final MovieListEditorView view;
     private final MovieList movieList;
+    private Movie selectedMovie;
 
     public MovieListEditor(MovieList movieList, MovieListEditorView view) {
         this.movieList = movieList;
@@ -18,5 +17,21 @@ public class MovieListEditor {
         String newName = view.getNewName();
         movieList.add(new Movie(newName));
         view.setMovies(movieList.toVector());
+    }
+
+    public void select(int index) {
+        if (index == -1)
+            selectedMovie = null;
+        else {
+            selectedMovie = movieList.get(index);
+            view.setNewName(selectedMovie.getName());
+        }
+    }
+
+    public void update() {
+        if (selectedMovie != null) {
+            selectedMovie.rename(view.getNewName());
+            view.setMovies(movieList.toVector());
+        }
     }
 }
