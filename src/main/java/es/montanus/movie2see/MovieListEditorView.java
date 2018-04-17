@@ -7,4 +7,5 @@ public interface MovieListEditorView {
     String getNewName();
     void setEditor(MovieListEditor editor);
     void setNewName(String newName);
+    void duplicateException(String string);
 }

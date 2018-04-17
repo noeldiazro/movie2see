@@ -9,14 +9,19 @@ public class MovieListEditor {
     public MovieListEditor(MovieList movieList, MovieListEditorView view) {
         this.movieList = movieList;
         this.view = view;
-        this.view.setMovies(this.movieList.toVector());
+        updateMovieList();
         view.setEditor(this);
     }
 
     public void add() {
         String newName = view.getNewName();
-        movieList.add(new Movie(newName));
-        view.setMovies(movieList.toVector());
+        try {
+            movieList.add(new Movie(newName));
+            updateMovieList();
+        }
+        catch (DuplicateMovieException ex) {
+            view.duplicateException(newName);
+        }
     }
 
     public void select(int index) {
@@ -29,9 +34,19 @@ public class MovieListEditor {
     }
 
     public void update() {
-        if (selectedMovie != null) {
-            movieList.rename(selectedMovie, view.getNewName());
-            view.setMovies(movieList.toVector());
+        if (selectedMovie == null) return;
+
+        final String newName = view.getNewName();
+        try {
+            movieList.rename(selectedMovie, newName);
+            updateMovieList();
         }
+        catch (DuplicateMovieException ex) {
+            view.duplicateException(newName);
+        }
+    }
+
+    private void updateMovieList() {
+        view.setMovies(movieList.toVector());
     }
 }

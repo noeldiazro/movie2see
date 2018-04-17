@@ -83,6 +83,32 @@ public class TestMovieListEditor extends TestCase {
         control.verify();
     }
 
+    public void testDuplicateCausingAdd() {
+        mockView.getNewName();
+        control.setReturnValue("Star Wars", 1);
+        mockView.duplicateException("Star Wars");
+        control.setVoidCallable(1);
+
+        control.activate();
+        MovieListEditor editor = new MovieListEditor(getMovieList(), mockView);
+        editor.add();
+        control.verify();
+    }
+
+    public void testDuplicateCausingUpdate() {
+        mockView.setNewName("Star Trek");
+        control.setVoidCallable(1);
+        mockView.getNewName();
+        control.setReturnValue("Star Wars", 1);
+        mockView.duplicateException("Star Wars");
+        control.setVoidCallable(1);
+
+        control.activate();
+        MovieListEditor editor = new MovieListEditor(getMovieList(), mockView);
+        editor.select(1);
+        editor.update();
+        control.verify();
+    }
 
     /*
     public void testUpdating() {

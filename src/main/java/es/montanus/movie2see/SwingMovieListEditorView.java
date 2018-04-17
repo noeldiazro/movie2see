@@ -34,6 +34,14 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
         movieField.setText(newName);
     }
 
+    @Override
+    public void duplicateException(String string) {
+        JOptionPane.showMessageDialog(this,
+                "That would result in a duplicate Movie.",
+                "Duplicate Movie",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
     private void init() {
         setTitle();
         setLayout();
