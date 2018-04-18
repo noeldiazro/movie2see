@@ -9,7 +9,7 @@ public class AllTests extends TestSuite {
         suite.addTestSuite(TestMovieListWithOneMovie.class);
         suite.addTestSuite(TestMovieListWithTwoMovies.class);
         suite.addTestSuite(TestMovieListEditor.class);
-        suite.addTestSuite(TestMovie.class);
+        suite.addTestSuite(TestUnratedMovie.class);
         return suite;
     }
 

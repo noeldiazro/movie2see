@@ -3,10 +3,17 @@ package es.montanus.movie2see;
 public class Movie {
     public static final String NULL_NAME_MSG = "Movie name can't be null";
     public static final String EMPTY_NAME_MSG = "Movie name can't be empty";
+
+    private final Rating rating;
     private String name;
 
     public Movie(String name) {
+        this(name, null);
+    }
+
+    public Movie(String name, Rating rating) {
         setName(name);
+        this.rating = rating;
     }
 
     public String getName() {
@@ -49,5 +56,15 @@ public class Movie {
     private void checkEmpty(String name) {
         if (name.isEmpty())
             throw new IllegalArgumentException(EMPTY_NAME_MSG);
+    }
+
+    public boolean isRated() {
+        return rating != null;
+    }
+
+    public Rating getRating() {
+        if (!isRated())
+            throw new UnratedException(getName());
+        return rating;
     }
 }
