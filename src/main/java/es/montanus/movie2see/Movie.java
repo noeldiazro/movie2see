@@ -4,8 +4,8 @@ public class Movie {
     public static final String NULL_NAME_MSG = "Movie name can't be null";
     public static final String EMPTY_NAME_MSG = "Movie name can't be empty";
 
-    private final Rating rating;
     private String name;
+    private Rating rating;
 
     public Movie(String name) {
         this(name, null);
@@ -66,5 +66,9 @@ public class Movie {
         if (!isRated())
             throw new UnratedException(getName());
         return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 }

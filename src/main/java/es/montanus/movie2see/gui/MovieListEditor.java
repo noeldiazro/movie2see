@@ -3,6 +3,7 @@ package es.montanus.movie2see.gui;
 import es.montanus.movie2see.DuplicateMovieException;
 import es.montanus.movie2see.Movie;
 import es.montanus.movie2see.MovieList;
+import es.montanus.movie2see.Rating;
 
 public class MovieListEditor {
 
@@ -18,14 +19,19 @@ public class MovieListEditor {
     }
 
     public void add() {
-        String newName = view.getNewName();
+        final String nameField = view.getNameField();
+        final int ratingField = view.getRatingField();
         try {
-            movieList.add(new Movie(newName));
+            movieList.add(makeMovie(nameField, ratingField));
             updateMovieList();
         }
         catch (DuplicateMovieException ex) {
-            view.duplicateException(newName);
+            view.duplicateException(nameField);
         }
+    }
+
+    private Movie makeMovie(String nameField, int ratingField) {
+        return new Movie(nameField, makeRatingFromField(ratingField));
     }
 
     public void select(int index) {
@@ -33,21 +39,34 @@ public class MovieListEditor {
             selectedMovie = null;
         else {
             selectedMovie = movieList.get(index);
-            view.setNewName(selectedMovie.getName());
+            view.setNameField(selectedMovie.getName());
+            view.setRatingField(getRatingValue(selectedMovie));
         }
+    }
+
+    private int getRatingValue(Movie movie) {
+        if (!movie.isRated()) return 0;
+
+        return movie.getRating().getValue() + 1;
     }
 
     public void update() {
         if (selectedMovie == null) return;
 
-        final String newName = view.getNewName();
+        final String newName = view.getNameField();
+        final int ratingField = view.getRatingField();
         try {
             movieList.rename(selectedMovie, newName);
+            selectedMovie.setRating(makeRatingFromField(ratingField));
             updateMovieList();
         }
         catch (DuplicateMovieException ex) {
             view.duplicateException(newName);
         }
+    }
+
+    private Rating makeRatingFromField(int ratingField) {
+        return ratingField == 0 ? null : new Rating(ratingField - 1);
     }
 
     private void updateMovieList() {

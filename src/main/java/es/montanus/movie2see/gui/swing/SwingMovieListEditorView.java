@@ -19,6 +19,7 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
     private JList movieList;
     private MovieListEditor editor;
     private JTextField movieField;
+    private JComboBox ratingField;
 
     private SwingMovieListEditorView() {
     }
@@ -27,7 +28,8 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
         movieList.setListData(movies);
     }
 
-    public String getNewName() {
+    @Override
+    public String getNameField() {
         return movieField.getText();
     }
 
@@ -36,8 +38,8 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
     }
 
     @Override
-    public void setNewName(String newName) {
-        movieField.setText(newName);
+    public void setNameField(String string) {
+        movieField.setText(string);
     }
 
     @Override
@@ -48,15 +50,27 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
                 JOptionPane.ERROR_MESSAGE);
     }
 
+    @Override
+    public void setRatingField(int value) {
+        ratingField.setSelectedIndex(value);
+    }
+
+    @Override
+    public int getRatingField() {
+        return ratingField.getSelectedIndex();
+    }
+
     private void init() {
         setTitle();
         setLayout();
         initList();
         initField();
+        initRatingCombo();
         initAddButton();
         initUpdateButton();
         pack();
     }
+
 
     private void setTitle() {
         setTitle("Movie List");
@@ -85,6 +99,11 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
     private void initField() {
         movieField = new JTextField(16);
         getContentPane().add(movieField);
+    }
+
+    private void initRatingCombo() {
+        ratingField = new JComboBox(new String[] {"-", "0", "1", "2", "3", "4", "5"});
+        getContentPane().add(ratingField);
     }
 
     private void initAddButton() {

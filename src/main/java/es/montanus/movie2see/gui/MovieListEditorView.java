@@ -7,8 +7,10 @@ import java.util.Vector;
 
 public interface MovieListEditorView {
     void setMovies(Vector<Movie> movies);
-    String getNewName();
+    String getNameField();
     void setEditor(MovieListEditor editor);
-    void setNewName(String newName);
+    void setNameField(String string);
     void duplicateException(String string);
+    void setRatingField(int value);
+    int getRatingField();
 }

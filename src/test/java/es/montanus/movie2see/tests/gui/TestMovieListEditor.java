@@ -2,6 +2,7 @@ package es.montanus.movie2see.tests.gui;
 
 import es.montanus.movie2see.Movie;
 import es.montanus.movie2see.MovieList;
+import es.montanus.movie2see.Rating;
 import es.montanus.movie2see.gui.MovieListEditor;
 import es.montanus.movie2see.gui.MovieListEditorView;
 import junit.framework.TestCase;
@@ -19,7 +20,7 @@ public class TestMovieListEditor extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        starWars = new Movie("Star Wars");
+        starWars = new Movie("Star Wars", new Rating(5));
         starTrek = new Movie("Star Trek");
         lostInSpace = new Movie("Lost in Space");
 
@@ -27,7 +28,7 @@ public class TestMovieListEditor extends TestCase {
         mockView = (MovieListEditorView) control.getMock();
 
         mockView.setMovies(getMovieVector());
-        control.setVoidCallable(1);
+        control.setDefaultVoidCallable();
         mockView.setEditor(null);
         control.setDefaultVoidCallable();
     }
@@ -39,8 +40,10 @@ public class TestMovieListEditor extends TestCase {
     }
 
     public void testAdding() {
-        mockView.getNewName();
+        mockView.getNameField();
         control.setReturnValue("Lost in Space");
+        mockView.getRatingField();
+        control.setReturnValue(6);
         mockView.setMovies(getMovieVectorWithAddition());
         control.setVoidCallable(1);
 
@@ -71,21 +74,28 @@ public class TestMovieListEditor extends TestCase {
     }
 
     public void testSelecting() {
-        mockView.setNewName("Star Trek");
+        mockView.setNameField("Star Wars");
         control.setVoidCallable(1);
-        mockView.setNewName("Star Wars");
+        mockView.setRatingField(6);
+        control.setVoidCallable(1);
+
+        mockView.setNameField("Star Trek");
+        control.setVoidCallable(1);
+        mockView.setRatingField(0);
         control.setVoidCallable(1);
 
         control.activate();
         MovieListEditor editor = new MovieListEditor(getMovieList(), mockView);
-        editor.select(1);
         editor.select(0);
+        editor.select(1);
         control.verify();
     }
 
     public void testDuplicateCausingAdd() {
-        mockView.getNewName();
+        mockView.getNameField();
         control.setReturnValue("Star Wars", 1);
+        mockView.getRatingField();
+        control.setReturnValue(6, 1);
         mockView.duplicateException("Star Wars");
         control.setVoidCallable(1);
 
@@ -96,10 +106,14 @@ public class TestMovieListEditor extends TestCase {
     }
 
     public void testDuplicateCausingUpdate() {
-        mockView.setNewName("Star Trek");
+        mockView.setNameField("Star Trek");
         control.setVoidCallable(1);
-        mockView.getNewName();
+        mockView.setRatingField(0);
+        control.setVoidCallable(1);
+        mockView.getNameField();
         control.setReturnValue("Star Wars", 1);
+        mockView.getRatingField();
+        control.setReturnValue(6);
         mockView.duplicateException("Star Wars");
         control.setVoidCallable(1);
 
@@ -110,18 +124,21 @@ public class TestMovieListEditor extends TestCase {
         control.verify();
     }
 
-    /*
-    public void testUpdating() {
+
+    public void testUpdatingBothNameAndRating() {
         Vector<Movie> newMovies = new Vector<Movie>();
         newMovies.add(starWars);
         newMovies.add(new Movie("Star Trek I"));
 
-
-        mockView.setNewName("Star Trek");
+        mockView.setNameField("Star Trek");
+        control.setVoidCallable(1);
+        mockView.setRatingField(0);
         control.setVoidCallable(1);
 
-        mockView.getNewName();
+        mockView.getNameField();
         control.setReturnValue("Star Trek I", 1);
+        mockView.getRatingField();
+        control.setReturnValue(3);
 
         mockView.setMovies(newMovies);
         control.setVoidCallable(1);
@@ -132,5 +149,27 @@ public class TestMovieListEditor extends TestCase {
         editor.update();
         control.verify();
     }
-    */
+
+    public void testUpdatingJustRating() {
+        mockView.setNameField("Star Wars");
+        control.setVoidCallable(1);
+        mockView.setRatingField(6);
+        control.setVoidCallable(1);
+
+        mockView.getNameField();
+        control.setReturnValue("Star Wars");
+        mockView.getRatingField();
+        control.setReturnValue(4);
+
+        mockView.setMovies(getMovieVector());
+        control.setDefaultVoidCallable();
+
+        control.activate();
+        MovieListEditor editor = new MovieListEditor(getMovieList(), mockView);
+        editor.select(0);
+        editor.update();
+
+        control.verify();
+    }
+
 }

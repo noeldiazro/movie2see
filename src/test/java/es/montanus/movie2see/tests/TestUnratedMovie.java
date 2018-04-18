@@ -1,6 +1,7 @@
 package es.montanus.movie2see.tests;
 
 import es.montanus.movie2see.Movie;
+import es.montanus.movie2see.Rating;
 import es.montanus.movie2see.UnratedException;
 import junit.framework.TestCase;
 
@@ -80,6 +81,11 @@ public class TestUnratedMovie extends TestCase {
         catch (UnratedException expected) {
             assertEquals(String.format(UnratedException.MSG_FORMAT, STAR_WARS), expected.getMessage());
         }
+    }
+
+    public void testChangeRating() {
+        movie.setRating(new Rating(5));
+        assertEquals(new Rating(5), movie.getRating());
     }
 
     public static void main(String[] args) {
