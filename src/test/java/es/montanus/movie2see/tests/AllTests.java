@@ -1,5 +1,6 @@
 package es.montanus.movie2see.tests;
 
+import es.montanus.movie2see.tests.gui.TestMovieListEditor;
 import junit.framework.TestSuite;
 
 public class AllTests extends TestSuite {

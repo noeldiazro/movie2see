@@ -1,4 +1,10 @@
-package es.montanus.movie2see;
+package es.montanus.movie2see.gui.swing;
+
+import es.montanus.movie2see.Movie;
+import es.montanus.movie2see.MovieList;
+import es.montanus.movie2see.Rating;
+import es.montanus.movie2see.gui.MovieListEditor;
+import es.montanus.movie2see.gui.MovieListEditorView;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -63,6 +69,7 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
     private void initList() {
         movieList = new JList();
         movieList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        movieList.setCellRenderer(new CustomMovieListRenderer());
         movieList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {

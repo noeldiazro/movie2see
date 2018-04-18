@@ -1,4 +1,7 @@
-package es.montanus.movie2see;
+package es.montanus.movie2see.gui;
+
+import es.montanus.movie2see.Movie;
+import es.montanus.movie2see.gui.MovieListEditor;
 
 import java.util.Vector;
 

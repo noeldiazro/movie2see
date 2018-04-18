@@ -1,9 +1,9 @@
-package es.montanus.movie2see.tests;
+package es.montanus.movie2see.tests.gui;
 
 import es.montanus.movie2see.Movie;
 import es.montanus.movie2see.MovieList;
-import es.montanus.movie2see.MovieListEditor;
-import es.montanus.movie2see.MovieListEditorView;
+import es.montanus.movie2see.gui.MovieListEditor;
+import es.montanus.movie2see.gui.MovieListEditorView;
 import junit.framework.TestCase;
 import org.easymock.EasyMock;
 import org.easymock.MockControl;

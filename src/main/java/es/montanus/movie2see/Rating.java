@@ -22,4 +22,8 @@ public class Rating {
     public int hashCode() {
         return value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }

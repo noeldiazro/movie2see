@@ -8,6 +8,7 @@ public class TestRating extends TestCase {
         final int value = 3;
         Rating rating = new Rating(value);
         assertEquals(new Rating(value), rating);
+        assertEquals(value, rating.getValue());
     }
 
     public static void main(String[] args) {
