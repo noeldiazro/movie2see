@@ -4,12 +4,15 @@ import es.montanus.movie2see.Category;
 import es.montanus.movie2see.Movie;
 import es.montanus.movie2see.Rating;
 
-public class TestRatedMovie extends TestMovie {
+public class TestRatedAndCategorizedMovie extends TestMovie {
     private static final int RATING_VALUE = 5;
 
     @Override
     protected Movie getMovie() {
-        return new Movie.Builder(MOVIE_NAME).setRating(new Rating(RATING_VALUE)).build();
+        return new Movie.Builder(MOVIE_NAME).
+                setRating(new Rating(RATING_VALUE)).
+                setCategory(Category.SCIFI).
+                build();
     }
 
     @Override
@@ -24,10 +27,10 @@ public class TestRatedMovie extends TestMovie {
 
     @Override
     public void testGetCategory() {
-        assertEquals(Category.UNCATEGORIZED, movie.getCategory());
+        assertEquals(Category.SCIFI, movie.getCategory());
     }
 
     public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestRatedMovie.class);
+        junit.textui.TestRunner.run(TestRatedAndCategorizedMovie.class);
     }
 }

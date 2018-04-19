@@ -31,7 +31,7 @@ public class MovieListEditor {
     }
 
     private Movie makeMovie(String nameField, int ratingField) {
-        return new Movie(nameField, makeRatingFromField(ratingField));
+        return new Movie.Builder(nameField).setRating(makeRatingFromField(ratingField)).build();
     }
 
     public void select(int index) {

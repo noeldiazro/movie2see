@@ -3,17 +3,30 @@ package es.montanus.movie2see;
 public class Movie {
     public static final String NULL_NAME_MSG = "Movie name can't be null";
     public static final String EMPTY_NAME_MSG = "Movie name can't be empty";
+    public static final String NULL_CATEGORY_MSG = "Category can't be null";
 
     private String name;
     private Rating rating;
+    private Category category;
 
-    public Movie(String name) {
-        this(name, null);
+    private Movie(Builder builder) {
+        setName(builder.name);
+        this.rating = builder.rating;
+        setCategory(builder.category);
     }
 
-    public Movie(String name, Rating rating) {
-        setName(name);
-        this.rating = rating;
+    private void setCategory(Category category) {
+        checkCategory(category);
+        this.category = category;
+    }
+
+    private void checkCategory(Category category) {
+        if (!isValidCategory(category))
+            throw new IllegalArgumentException(NULL_CATEGORY_MSG);
+    }
+
+    private boolean isValidCategory(Category category) {
+        return category != null;
     }
 
     public String getName() {
@@ -70,5 +83,34 @@ public class Movie {
 
     public void setRating(Rating rating) {
         this.rating = rating;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public static class Builder {
+
+        private final String name;
+
+        private Rating rating = null;
+        private Category category = Category.UNCATEGORIZED;
+
+        public Builder(String name) {
+            this.name = name;
+        }
+
+        public Builder setRating(Rating rating) {
+            this.rating = rating;
+            return this;
+        }
+
+        public Builder setCategory(Category category) {
+            this.category = category;
+            return this;
+        }
+        public Movie build() {
+            return new Movie(this);
+        }
     }
 }

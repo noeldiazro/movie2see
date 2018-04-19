@@ -11,7 +11,7 @@ public class TestMovieListWithOneMovie extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         movieList = new MovieList();
-        movieList.add(new Movie("Movie Name"));
+        movieList.add(new Movie.Builder("Movie Name").build());
     }
 
     public void testSizeShouldBeOne() {
@@ -20,7 +20,7 @@ public class TestMovieListWithOneMovie extends TestCase {
 
     public void testAddingDuplicate() {
         try {
-            movieList.add(new Movie("Movie Name"));
+            movieList.add(new Movie.Builder("Movie Name").build());
             fail();
         }
         catch (DuplicateMovieException expected) {

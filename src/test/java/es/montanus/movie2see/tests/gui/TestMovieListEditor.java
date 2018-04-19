@@ -20,9 +20,9 @@ public class TestMovieListEditor extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        starWars = new Movie("Star Wars", new Rating(5));
-        starTrek = new Movie("Star Trek");
-        lostInSpace = new Movie("Lost in Space");
+        starWars = new Movie.Builder("Star Wars").setRating(new Rating(5)).build();
+        starTrek = new Movie.Builder("Star Trek").build();
+        lostInSpace = new Movie.Builder("Lost in Space").build();
 
         control = EasyMock.controlFor(MovieListEditorView.class);
         mockView = (MovieListEditorView) control.getMock();
@@ -128,7 +128,7 @@ public class TestMovieListEditor extends TestCase {
     public void testUpdatingBothNameAndRating() {
         Vector<Movie> newMovies = new Vector<Movie>();
         newMovies.add(starWars);
-        newMovies.add(new Movie("Star Trek I"));
+        newMovies.add(new Movie.Builder("Star Trek I").build());
 
         mockView.setNameField("Star Trek");
         control.setVoidCallable(1);

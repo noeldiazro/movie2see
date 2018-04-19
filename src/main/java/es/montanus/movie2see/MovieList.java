@@ -30,7 +30,7 @@ public class MovieList {
     }
 
     public void rename(Movie movie, String newName) throws DuplicateMovieException {
-        final Movie potentialMovie = new Movie(newName);
+        final Movie potentialMovie = new Movie.Builder(newName).build();
         if (!movie.equals(potentialMovie))
             checkDuplicate(potentialMovie);
 
