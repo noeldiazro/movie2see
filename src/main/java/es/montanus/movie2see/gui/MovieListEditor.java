@@ -19,19 +19,22 @@ public class MovieListEditor {
     }
 
     public void add() {
-        final String nameField = view.getNameField();
-        final int ratingField = view.getRatingField();
+        final String name = view.getNameField();
         try {
-            movieList.add(makeMovie(nameField, ratingField));
+            movieList.add(makeMovie(name));
             updateMovieList();
         }
         catch (DuplicateMovieException ex) {
-            view.duplicateException(nameField);
+            view.duplicateException(name);
         }
     }
 
-    private Movie makeMovie(String nameField, int ratingField) {
-        return new Movie.Builder(nameField).setRating(makeRatingFromField(ratingField)).build();
+    private Movie makeMovie(String name) {
+
+        return new Movie.Builder(name).
+                setRating(makeRatingFromField(view.getRatingField())).
+                setCategory(view.getCategoryField()).
+                build();
     }
 
     public void select(int index) {
@@ -55,10 +58,10 @@ public class MovieListEditor {
         if (selectedMovie == null) return;
 
         final String newName = view.getNameField();
-        final int ratingField = view.getRatingField();
         try {
             movieList.rename(selectedMovie, newName);
-            selectedMovie.setRating(makeRatingFromField(ratingField));
+            selectedMovie.setRating(makeRatingFromField(view.getRatingField()));
+            selectedMovie.setCategory(view.getCategoryField());
             updateMovieList();
         }
         catch (DuplicateMovieException ex) {

@@ -48,6 +48,9 @@ public class TestMovieListEditor extends TestCase {
         control.setReturnValue("Lost in Space");
         mockView.getRatingField();
         control.setReturnValue(6);
+        mockView.getCategoryField();
+        control.setReturnValue(Category.SCIFI);
+
         mockView.setMovies(getMovieVectorWithAddition());
         control.setVoidCallable(1);
 
@@ -104,6 +107,9 @@ public class TestMovieListEditor extends TestCase {
         control.setReturnValue("Star Wars", 1);
         mockView.getRatingField();
         control.setReturnValue(6, 1);
+        mockView.getCategoryField();
+        control.setReturnValue(Category.SCIFI);
+
         mockView.duplicateException("Star Wars");
         control.setVoidCallable(1);
 
@@ -123,8 +129,7 @@ public class TestMovieListEditor extends TestCase {
 
         mockView.getNameField();
         control.setReturnValue("Star Wars", 1);
-        mockView.getRatingField();
-        control.setReturnValue(6);
+
         mockView.duplicateException("Star Wars");
         control.setVoidCallable(1);
 
@@ -152,6 +157,8 @@ public class TestMovieListEditor extends TestCase {
         control.setReturnValue("Star Trek I", 1);
         mockView.getRatingField();
         control.setReturnValue(3);
+        mockView.getCategoryField();
+        control.setReturnValue(Category.COMEDY);
 
         mockView.setMovies(newMovies);
         control.setVoidCallable(1);
@@ -175,6 +182,8 @@ public class TestMovieListEditor extends TestCase {
         control.setReturnValue("Star Wars");
         mockView.getRatingField();
         control.setReturnValue(4);
+        mockView.getCategoryField();
+        control.setReturnValue(Category.SCIFI);
 
         mockView.setMovies(getMovieVector());
         control.setDefaultVoidCallable();

@@ -20,7 +20,7 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
     private MovieListEditor editor;
     private JTextField movieField;
     private JComboBox ratingField;
-    private JTextField categoryField;
+    private JComboBox<Category> categoryField;
 
     private SwingMovieListEditorView() {
     }
@@ -63,7 +63,12 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
 
     @Override
     public void setCategoryField(Category category) {
-        categoryField.setText(category.toString());
+        categoryField.setSelectedItem(category);
+    }
+
+    @Override
+    public Category getCategoryField() {
+        return (Category)categoryField.getSelectedItem();
     }
 
     private void init() {
@@ -79,10 +84,9 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
     }
 
     private void initCategoryField() {
-        categoryField = new JTextField(16);
+        categoryField = new JComboBox<Category>(Category.categories());
         getContentPane().add(categoryField);
     }
-
 
     private void setTitle() {
         setTitle("Movie List");

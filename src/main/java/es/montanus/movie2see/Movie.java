@@ -15,7 +15,7 @@ public class Movie {
         setCategory(builder.category);
     }
 
-    private void setCategory(Category category) {
+    public void setCategory(Category category) {
         checkCategory(category);
         this.category = category;
     }

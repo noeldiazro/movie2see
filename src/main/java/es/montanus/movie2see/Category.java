@@ -1,5 +1,7 @@
 package es.montanus.movie2see;
 
+import java.util.HashMap;
+
 public class Category {
 
     public static final Category UNCATEGORIZED = new Category("Uncategorized");
@@ -23,5 +25,21 @@ public class Category {
     @Override
     public String toString() {
         return name;
+    }
+
+    public static Category[] categories() {
+        return new Category[] {
+                UNCATEGORIZED,
+                SCIFI,
+                HORROR,
+                COMEDY,
+                WESTERN,
+                DRAMA,
+                FANTASY,
+                KIDS,
+                ADULT,
+                MYSTERY,
+                THRILLER
+        };
     }
 }
