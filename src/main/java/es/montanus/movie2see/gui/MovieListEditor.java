@@ -41,6 +41,7 @@ public class MovieListEditor {
             selectedMovie = movieList.get(index);
             view.setNameField(selectedMovie.getName());
             view.setRatingField(getRatingValue(selectedMovie));
+            view.setCategoryField(selectedMovie.getCategory());
         }
     }
 

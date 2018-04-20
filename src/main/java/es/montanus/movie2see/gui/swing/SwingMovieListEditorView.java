@@ -1,8 +1,8 @@
 package es.montanus.movie2see.gui.swing;
 
+import es.montanus.movie2see.Category;
 import es.montanus.movie2see.Movie;
 import es.montanus.movie2see.MovieList;
-import es.montanus.movie2see.Rating;
 import es.montanus.movie2see.gui.MovieListEditor;
 import es.montanus.movie2see.gui.MovieListEditorView;
 
@@ -20,6 +20,7 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
     private MovieListEditor editor;
     private JTextField movieField;
     private JComboBox ratingField;
+    private JTextField categoryField;
 
     private SwingMovieListEditorView() {
     }
@@ -60,15 +61,26 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
         return ratingField.getSelectedIndex();
     }
 
+    @Override
+    public void setCategoryField(Category category) {
+        categoryField.setText(category.toString());
+    }
+
     private void init() {
         setTitle();
         setLayout();
         initList();
-        initField();
+        initNameField();
         initRatingCombo();
+        initCategoryField();
         initAddButton();
         initUpdateButton();
         pack();
+    }
+
+    private void initCategoryField() {
+        categoryField = new JTextField(16);
+        getContentPane().add(categoryField);
     }
 
 
@@ -96,7 +108,7 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
         getContentPane().add(scroller);
     }
 
-    private void initField() {
+    private void initNameField() {
         movieField = new JTextField(16);
         getContentPane().add(movieField);
     }

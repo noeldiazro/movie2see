@@ -1,5 +1,6 @@
 package es.montanus.movie2see.tests.gui;
 
+import es.montanus.movie2see.Category;
 import es.montanus.movie2see.Movie;
 import es.montanus.movie2see.MovieList;
 import es.montanus.movie2see.Rating;
@@ -20,7 +21,10 @@ public class TestMovieListEditor extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        starWars = new Movie.Builder("Star Wars").setRating(new Rating(5)).build();
+        starWars = new Movie.Builder("Star Wars").
+                setRating(new Rating(5)).
+                setCategory(Category.SCIFI).
+                build();
         starTrek = new Movie.Builder("Star Trek").build();
         lostInSpace = new Movie.Builder("Lost in Space").build();
 
@@ -78,11 +82,15 @@ public class TestMovieListEditor extends TestCase {
         control.setVoidCallable(1);
         mockView.setRatingField(6);
         control.setVoidCallable(1);
+        mockView.setCategoryField(Category.SCIFI);
+        control.setVoidCallable(1);
 
         mockView.setNameField("Star Trek");
         control.setVoidCallable(1);
         mockView.setRatingField(0);
         control.setVoidCallable(1);
+        mockView.setCategoryField(Category.UNCATEGORIZED);
+        control.setVoidCallable();
 
         control.activate();
         MovieListEditor editor = new MovieListEditor(getMovieList(), mockView);
@@ -110,6 +118,9 @@ public class TestMovieListEditor extends TestCase {
         control.setVoidCallable(1);
         mockView.setRatingField(0);
         control.setVoidCallable(1);
+        mockView.setCategoryField(Category.UNCATEGORIZED);
+        control.setVoidCallable(1);
+
         mockView.getNameField();
         control.setReturnValue("Star Wars", 1);
         mockView.getRatingField();
@@ -134,6 +145,8 @@ public class TestMovieListEditor extends TestCase {
         control.setVoidCallable(1);
         mockView.setRatingField(0);
         control.setVoidCallable(1);
+        mockView.setCategoryField(Category.UNCATEGORIZED);
+        control.setVoidCallable();
 
         mockView.getNameField();
         control.setReturnValue("Star Trek I", 1);
@@ -155,6 +168,8 @@ public class TestMovieListEditor extends TestCase {
         control.setVoidCallable(1);
         mockView.setRatingField(6);
         control.setVoidCallable(1);
+        mockView.setCategoryField(Category.SCIFI);
+        control.setVoidCallable();
 
         mockView.getNameField();
         control.setReturnValue("Star Wars");
@@ -171,5 +186,6 @@ public class TestMovieListEditor extends TestCase {
 
         control.verify();
     }
+
 
 }

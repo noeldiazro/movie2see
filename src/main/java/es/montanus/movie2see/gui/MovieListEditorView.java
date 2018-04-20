@@ -1,5 +1,6 @@
 package es.montanus.movie2see.gui;
 
+import es.montanus.movie2see.Category;
 import es.montanus.movie2see.Movie;
 import es.montanus.movie2see.gui.MovieListEditor;
 
@@ -13,4 +14,5 @@ public interface MovieListEditorView {
     void duplicateException(String string);
     void setRatingField(int value);
     int getRatingField();
+    void setCategoryField(Category category);
 }
