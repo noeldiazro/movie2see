@@ -15,6 +15,7 @@ public class Category {
     public static final Category ADULT = new Category("Adult");
     public static final Category MYSTERY = new Category("Mystery");
     public static final Category THRILLER = new Category("Thriller");
+    public static final Category ALL = new Category("All");
 
     private final String name;
 

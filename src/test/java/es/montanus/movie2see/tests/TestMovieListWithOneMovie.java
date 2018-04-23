@@ -1,17 +1,15 @@
 package es.montanus.movie2see.tests;
 
+import es.montanus.movie2see.Category;
 import es.montanus.movie2see.DuplicateMovieException;
 import es.montanus.movie2see.Movie;
 import es.montanus.movie2see.MovieList;
-import junit.framework.TestCase;
 
-public class TestMovieListWithOneMovie extends TestCase {
-    private MovieList movieList;
+public class TestMovieListWithOneMovie extends TestMovieList {
 
-    public void setUp() throws Exception {
-        super.setUp();
-        movieList = new MovieList();
-        movieList.add(new Movie.Builder("Movie Name").build());
+    @Override
+    protected void populate(MovieList list) {
+        list.add(new Movie.Builder("Movie Name").setCategory(Category.FANTASY).build());
     }
 
     public void testSizeShouldBeOne() {
@@ -31,6 +29,23 @@ public class TestMovieListWithOneMovie extends TestCase {
             );
         }
 
+    }
+
+    public void testToString() {
+        assertEquals("[\"Movie Name\"]", movieList.toString());
+    }
+
+    public void testFilterByCategory_MovieIsFromGivenCategory() {
+        MovieList expected = getPopulatedMovieList();
+        assertEquals(expected, movieList.filterByCategory(Category.FANTASY));
+    }
+
+    public void testFilterByCategory_MovieIsNotFromGivenCategory() {
+        assertEquals(getEmptyMovieList(), movieList.filterByCategory(Category.HORROR));
+    }
+
+    public void testFilterByCategory_All() {
+        assertEquals(getPopulatedMovieList(), movieList.filterByCategory(Category.ALL));
     }
 
     public static void main(String[] args) {

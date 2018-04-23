@@ -89,6 +89,10 @@ public class Movie {
         return category;
     }
 
+    public boolean isOfCategory(Category category) {
+        return category == Category.ALL || getCategory() == category;
+    }
+
     public static class Builder {
 
         private final String name;

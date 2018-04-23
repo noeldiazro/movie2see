@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Vector;
 
 public class MovieList {
+    public static final String NULL_CATEGORY_MSG = "Category can't be null";
     private List<Movie> movies = new ArrayList<Movie>();
 
     public int size() {
@@ -40,5 +41,51 @@ public class MovieList {
     private void checkDuplicate(Movie movie) throws DuplicateMovieException {
         if (contains(movie))
             throw new DuplicateMovieException(movie);
+    }
+
+    public MovieList filterByCategory(Category category) {
+        if (category == null) throw new IllegalArgumentException(NULL_CATEGORY_MSG);
+
+        final MovieList result = new MovieList();
+        for (Movie movie: movies)
+            if (movie.isOfCategory(category))
+                result.add(movie);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + getStringFor(movies) + "]";
+    }
+
+    private String getStringFor(List<Movie> movies) {
+        if (movies.isEmpty())
+            return "";
+        if (movies.size() == 1)
+            return getStringFor(movies.get(0));
+        return getStringFor(movies.get(0)) + ", " + getStringFor(movies.subList(1, movies.size()));
+    }
+
+    private String getStringFor(Movie movie) {
+        return wrap("\"", movie.getName());
+    }
+
+    private String wrap(String wrapping, String text) {
+        return wrapping + text + wrapping;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MovieList that = (MovieList) o;
+
+        return this.movies.equals(that.movies);
+    }
+
+    @Override
+    public int hashCode() {
+        return movies.hashCode();
     }
 }

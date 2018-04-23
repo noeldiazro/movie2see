@@ -1,22 +1,20 @@
 package es.montanus.movie2see.tests;
 
+import es.montanus.movie2see.Category;
 import es.montanus.movie2see.DuplicateMovieException;
 import es.montanus.movie2see.Movie;
 import es.montanus.movie2see.MovieList;
-import junit.framework.TestCase;
 
-public class TestMovieListWithTwoMovies extends TestCase {
-    private MovieList movieList;
+public class TestMovieListWithTwoMovies extends TestMovieList {
     private Movie starWars;
     private Movie starTrek;
 
-    public void setUp() throws Exception {
-        super.setUp();
-        movieList = new MovieList();
-        starWars = new Movie.Builder("Star Wars").build();
-        starTrek = new Movie.Builder("Star Trek").build();
-        movieList.add(starWars);
-        movieList.add(starTrek);
+    @Override
+    protected void populate(MovieList list) {
+        starWars = new Movie.Builder("Star Wars").setCategory(Category.SCIFI).build();
+        starTrek = new Movie.Builder("Star Trek").setCategory(Category.SCIFI).build();
+        list.add(starWars);
+        list.add(starTrek);
     }
 
     public void testSizeShouldBeTwo() {
@@ -57,6 +55,18 @@ public class TestMovieListWithTwoMovies extends TestCase {
             );
         }
 
+    }
+
+    public void testFilterByCategory_MoviesBelongToCategory() {
+        assertEquals(getPopulatedMovieList(), movieList.filterByCategory(Category.SCIFI));
+    }
+
+    public void testFilterByAllCategory() {
+        assertEquals(getPopulatedMovieList(), movieList.filterByCategory(Category.ALL));
+    }
+
+    public void testToString() {
+        assertEquals("[\"Star Wars\", \"Star Trek\"]", movieList.toString());
     }
 
     public static void main(String[] args) {
