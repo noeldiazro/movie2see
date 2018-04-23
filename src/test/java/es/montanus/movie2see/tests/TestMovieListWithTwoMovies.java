@@ -1,5 +1,6 @@
 package es.montanus.movie2see.tests;
 
+import es.montanus.movie2see.Category;
 import es.montanus.movie2see.DuplicateMovieException;
 import es.montanus.movie2see.Movie;
 import es.montanus.movie2see.MovieList;
@@ -13,8 +14,8 @@ public class TestMovieListWithTwoMovies extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         movieList = new MovieList();
-        starWars = new Movie.Builder("Star Wars").build();
-        starTrek = new Movie.Builder("Star Trek").build();
+        starWars = new Movie.Builder("Star Wars").setCategory(Category.SCIFI).build();
+        starTrek = new Movie.Builder("Star Trek").setCategory(Category.SCIFI).build();
         movieList.add(starWars);
         movieList.add(starTrek);
     }
@@ -57,6 +58,17 @@ public class TestMovieListWithTwoMovies extends TestCase {
             );
         }
 
+    }
+
+    public void testFilterByCategory_() {
+        MovieList expected = new MovieList();
+        expected.add(new Movie.Builder("Star Wars").setCategory(Category.SCIFI).build());
+        expected.add(new Movie.Builder("Star Trek").setCategory(Category.SCIFI).build());
+        assertEquals(expected, movieList.filterByCategory(Category.SCIFI));
+    }
+
+    public void testToString() {
+        assertEquals("[\"Star Wars\", \"Star Trek\"]", movieList.toString());
     }
 
     public static void main(String[] args) {
