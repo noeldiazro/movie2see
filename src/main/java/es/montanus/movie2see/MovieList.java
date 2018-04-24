@@ -1,5 +1,7 @@
 package es.montanus.movie2see;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -88,4 +90,11 @@ public class MovieList {
     public int hashCode() {
         return movies.hashCode();
     }
+
+    public void writeTo(Writer destination) throws IOException {
+        for (Movie movie: movies)
+            movie.writeTo(destination);
+        destination.flush();
+    }
+
 }

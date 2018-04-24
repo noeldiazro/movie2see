@@ -1,5 +1,8 @@
 package es.montanus.movie2see;
 
+import java.io.IOException;
+import java.io.Writer;
+
 public class Movie {
     public static final String NULL_NAME_MSG = "Movie name can't be null";
     public static final String EMPTY_NAME_MSG = "Movie name can't be empty";
@@ -91,6 +94,22 @@ public class Movie {
 
     public boolean isOfCategory(Category category) {
         return category == Category.ALL || getCategory() == category;
+    }
+
+    public void writeTo(Writer destination) throws IOException {
+        destination.write(getName());
+        writeSeparator(destination);
+        destination.write(getCategory().toString());
+        writeSeparator(destination);
+        if (isRated())
+            destination.write(Integer.toString(getRating().getValue()));
+        else
+            destination.write("-1");
+        destination.write('\n');
+    }
+
+    private void writeSeparator(Writer destination) throws IOException {
+        destination.write('|');
     }
 
     public static class Builder {
