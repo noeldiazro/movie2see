@@ -6,8 +6,9 @@ public class MovieListEditor {
 
     private final MovieListEditorView view;
     private final MovieList movieList;
-    private MovieList filteredList;
     private Movie selectedMovie;
+    private MovieList filteredList;
+    private Category filterCategory = Category.ALL;
 
     public MovieListEditor(MovieList movieList, MovieListEditorView view) {
         this.movieList = movieList;
@@ -61,6 +62,7 @@ public class MovieListEditor {
             movieList.rename(selectedMovie, newName);
             selectedMovie.setRating(makeRatingFromField(view.getRatingField()));
             selectedMovie.setCategory(view.getCategoryField());
+            filteredList = movieList.filterByCategory(filterCategory);
             updateMovieList();
         }
         catch (DuplicateMovieException ex) {
@@ -77,7 +79,8 @@ public class MovieListEditor {
     }
 
     public void filterOn(Category category) {
-        filteredList = movieList.filterByCategory(category);
+        filterCategory = category;
+        filteredList = movieList.filterByCategory(filterCategory);
         updateMovieList();
     }
 }

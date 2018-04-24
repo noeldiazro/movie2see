@@ -173,4 +173,42 @@ public class TestMovieListEditorWithCategoryFiltering extends TestCase {
 
         control.verify();
     }
+
+    public void testChangingCategory() {
+        mockView.setMovies(fantasyMovies);
+        control.setVoidCallable(1);
+
+        mockView.setNameField(princessBride.getName());
+        control.setVoidCallable();
+        mockView.setRatingField(6);
+        control.setVoidCallable(1);
+        mockView.setCategoryField(Category.FANTASY);
+        control.setVoidCallable(1);
+
+        mockView.getNameField();
+        control.setReturnValue(princessBride.getName());
+        mockView.getRatingField();
+        control.setReturnValue(5);
+        mockView.getCategoryField();
+        control.setReturnValue(Category.COMEDY);
+
+        Vector<Movie> newFantasyMovies = new Vector<Movie>();
+        newFantasyMovies.add(fotr);
+        mockView.setMovies(newFantasyMovies);
+        control.setVoidCallable(1);
+
+        Vector<Movie> comedyMovies = new Vector<Movie>();
+        comedyMovies.add(princessBride);
+        mockView.setMovies(comedyMovies);
+        control.setVoidCallable(1);
+
+        control.activate();
+
+        MovieListEditor editor = new MovieListEditor(movieList, mockView);
+        editor.filterOn(Category.FANTASY);
+        editor.select(1);
+        editor.update();
+        editor.filterOn(Category.COMEDY);
+        control.verify();
+    }
 }
