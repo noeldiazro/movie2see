@@ -30,6 +30,7 @@ public class Category {
 
     public static Category[] categories() {
         return new Category[] {
+                ALL,
                 UNCATEGORIZED,
                 SCIFI,
                 HORROR,

@@ -1,19 +1,18 @@
 package es.montanus.movie2see.gui;
 
-import es.montanus.movie2see.DuplicateMovieException;
-import es.montanus.movie2see.Movie;
-import es.montanus.movie2see.MovieList;
-import es.montanus.movie2see.Rating;
+import es.montanus.movie2see.*;
 
 public class MovieListEditor {
 
     private final MovieListEditorView view;
     private final MovieList movieList;
+    private MovieList filteredList;
     private Movie selectedMovie;
 
     public MovieListEditor(MovieList movieList, MovieListEditorView view) {
         this.movieList = movieList;
         this.view = view;
+        this.filteredList = movieList;
         updateMovieList();
         view.setEditor(this);
     }
@@ -41,7 +40,7 @@ public class MovieListEditor {
         if (index == -1)
             selectedMovie = null;
         else {
-            selectedMovie = movieList.get(index);
+            selectedMovie = filteredList.get(index);
             view.setNameField(selectedMovie.getName());
             view.setRatingField(getRatingValue(selectedMovie));
             view.setCategoryField(selectedMovie.getCategory());
@@ -74,6 +73,11 @@ public class MovieListEditor {
     }
 
     private void updateMovieList() {
-        view.setMovies(movieList.toVector());
+        view.setMovies(filteredList.toVector());
+    }
+
+    public void filterOn(Category category) {
+        filteredList = movieList.filterByCategory(category);
+        updateMovieList();
     }
 }

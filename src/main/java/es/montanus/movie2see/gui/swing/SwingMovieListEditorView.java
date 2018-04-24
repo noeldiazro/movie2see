@@ -74,6 +74,7 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
     private void init() {
         setTitle();
         setLayout();
+        initCategoryFilterField();
         initList();
         initNameField();
         initRatingCombo();
@@ -81,6 +82,18 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
         initAddButton();
         initUpdateButton();
         pack();
+    }
+
+    private void initCategoryFilterField() {
+        final JComboBox<Category> categoryFilterField = new JComboBox<Category>(Category.categories());
+        categoryFilterField.setSelectedItem(Category.ALL);
+        categoryFilterField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editor.filterOn((Category) categoryFilterField.getSelectedItem());
+            }
+        });
+        getContentPane().add(categoryFilterField);
     }
 
     private void initCategoryField() {
