@@ -14,7 +14,7 @@ public class MovieListEditor {
         this.movieList = movieList;
         this.view = view;
         this.filteredList = movieList;
-        updateMovieList();
+        this.view.setMovies(filteredList.toVector());
         view.setEditor(this);
     }
 
@@ -62,7 +62,6 @@ public class MovieListEditor {
             movieList.rename(selectedMovie, newName);
             selectedMovie.setRating(makeRatingFromField(view.getRatingField()));
             selectedMovie.setCategory(view.getCategoryField());
-            filteredList = movieList.filterByCategory(filterCategory);
             updateMovieList();
         }
         catch (DuplicateMovieException ex) {
@@ -74,13 +73,13 @@ public class MovieListEditor {
         return ratingField == 0 ? null : new Rating(ratingField - 1);
     }
 
-    private void updateMovieList() {
-        view.setMovies(filteredList.toVector());
-    }
-
     public void filterOn(Category category) {
         filterCategory = category;
-        filteredList = movieList.filterByCategory(filterCategory);
         updateMovieList();
+    }
+
+    private void updateMovieList() {
+        filteredList = movieList.filterByCategory(filterCategory);
+        view.setMovies(filteredList.toVector());
     }
 }
