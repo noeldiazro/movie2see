@@ -13,6 +13,7 @@ public class MovieListEditor {
     private Movie selectedMovie;
     private MovieList filteredList;
     private Category filterCategory = Category.ALL;
+    private File outputFile;
 
     public MovieListEditor(MovieList movieList, MovieListEditorView view) {
         this.movieList = movieList;
@@ -88,10 +89,13 @@ public class MovieListEditor {
     }
 
     public boolean saveAs() throws IOException {
-        File outputFile = view.chooseFile("*.dat");
-        if (isFileChosen(outputFile)) {
+        outputFile = view.chooseFile("*.dat");
+        return save();
+    }
+
+    public boolean save() throws IOException {
+        if (isFileChosen(outputFile))
             tryListWriting(outputFile);
-        }
         return isFileChosen(outputFile);
     }
 

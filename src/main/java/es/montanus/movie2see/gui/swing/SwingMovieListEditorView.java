@@ -5,12 +5,10 @@ import es.montanus.movie2see.Movie;
 import es.montanus.movie2see.MovieList;
 import es.montanus.movie2see.gui.MovieListEditor;
 import es.montanus.movie2see.gui.MovieListEditorView;
-import org.omg.CORBA.CODESET_INCOMPATIBLE;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -105,9 +103,15 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
 
     private JMenuBar initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = getFileMenu();
+        menuBar.add(fileMenu);
+        return menuBar;
+    }
+
+    private JMenu getFileMenu() {
         JMenu fileMenu = new JMenu("File");
-        final JMenuItem saveAsItem = new JMenuItem("Save As...");
-        saveAsItem.addActionListener(new ActionListener() {
+
+        fileMenu.add(getMenuItem("Save As...", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -116,10 +120,25 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
                     // TODO: deal with this
                 }
             }
-        });
-        fileMenu.add(saveAsItem);
-        menuBar.add(fileMenu);
-        return menuBar;
+        }));
+
+        fileMenu.add(getMenuItem("Save", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    editor.save();
+                } catch (IOException ex) {
+                    // TODO: deal with this
+                }
+            }
+        }));
+        return fileMenu;
+    }
+
+    private JMenuItem getMenuItem(String text, ActionListener actionListener) {
+        final JMenuItem item = new JMenuItem(text);
+        item.addActionListener(actionListener);
+        return item;
     }
 
     private JPanel initListPane() {
