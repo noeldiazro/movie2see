@@ -4,6 +4,7 @@ import es.montanus.movie2see.Category;
 import es.montanus.movie2see.Movie;
 import es.montanus.movie2see.gui.MovieListEditor;
 
+import java.io.File;
 import java.util.Vector;
 
 public interface MovieListEditorView {
@@ -16,4 +17,5 @@ public interface MovieListEditorView {
     int getRatingField();
     void setCategoryField(Category category);
     Category getCategoryField();
+    File chooseFile(String pattern);
 }

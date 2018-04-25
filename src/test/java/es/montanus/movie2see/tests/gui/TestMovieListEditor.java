@@ -2,40 +2,11 @@ package es.montanus.movie2see.tests.gui;
 
 import es.montanus.movie2see.Category;
 import es.montanus.movie2see.Movie;
-import es.montanus.movie2see.MovieList;
-import es.montanus.movie2see.Rating;
 import es.montanus.movie2see.gui.MovieListEditor;
-import es.montanus.movie2see.gui.MovieListEditorView;
-import junit.framework.TestCase;
-import org.easymock.EasyMock;
-import org.easymock.MockControl;
 
 import java.util.Vector;
 
-public class TestMovieListEditor extends TestCase {
-    private Movie starWars;
-    private Movie starTrek;
-    private Movie lostInSpace;
-    private MockControl control;
-    private MovieListEditorView mockView;
-
-    public void setUp() throws Exception {
-        super.setUp();
-        starWars = new Movie.Builder("Star Wars").
-                setRating(new Rating(5)).
-                setCategory(Category.SCIFI).
-                build();
-        starTrek = new Movie.Builder("Star Trek").build();
-        lostInSpace = new Movie.Builder("Lost in Space").build();
-
-        control = EasyMock.controlFor(MovieListEditorView.class);
-        mockView = (MovieListEditorView) control.getMock();
-
-        mockView.setMovies(getMovieVector());
-        control.setDefaultVoidCallable();
-        mockView.setEditor(null);
-        control.setDefaultVoidCallable();
-    }
+public class TestMovieListEditor extends BaseTestMovieListEditor {
 
     public void testList() {
         control.activate();
@@ -62,22 +33,8 @@ public class TestMovieListEditor extends TestCase {
 
     private Vector<Movie> getMovieVectorWithAddition() {
         Vector<Movie> result = getMovieVector();
-        result.add(lostInSpace);
+        result.add(new Movie.Builder("Lost in Space").build());
         return result;
-    }
-
-    private Vector<Movie> getMovieVector() {
-        Vector<Movie> movieVector = new Vector<Movie>();
-        movieVector.add(starWars);
-        movieVector.add(starTrek);
-        return movieVector;
-    }
-
-    private MovieList getMovieList() {
-        MovieList movieList = new MovieList();
-        movieList.add(starWars);
-        movieList.add(starTrek);
-        return movieList;
     }
 
     public void testSelecting() {
@@ -161,7 +118,7 @@ public class TestMovieListEditor extends TestCase {
         control.setReturnValue(Category.COMEDY);
 
         mockView.setMovies(newMovies);
-        control.setVoidCallable(1);
+        control.setDefaultVoidCallable();
 
         control.activate();
         MovieListEditor editor = new MovieListEditor(getMovieList(), mockView);
@@ -195,6 +152,4 @@ public class TestMovieListEditor extends TestCase {
 
         control.verify();
     }
-
-
 }

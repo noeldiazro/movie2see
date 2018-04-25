@@ -2,6 +2,10 @@ package es.montanus.movie2see.gui;
 
 import es.montanus.movie2see.*;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class MovieListEditor {
 
     private final MovieListEditorView view;
@@ -81,5 +85,23 @@ public class MovieListEditor {
     private void updateMovieList() {
         filteredList = movieList.filterByCategory(filterCategory);
         view.setMovies(filteredList.toVector());
+    }
+
+    public boolean saveAs() throws IOException {
+        File outputFile = view.chooseFile("*.dat");
+        if (isFileChosen(outputFile)) {
+            tryListWriting(outputFile);
+        }
+        return isFileChosen(outputFile);
+    }
+
+    private boolean isFileChosen(File file) {
+        return file != null;
+    }
+
+    private void tryListWriting(File outputFile) throws IOException {
+        try (FileWriter writer = new FileWriter(outputFile)) {
+            movieList.writeTo(writer);
+        }
     }
 }

@@ -10,9 +10,12 @@ import org.omg.CORBA.CODESET_INCOMPATIBLE;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Vector;
 
 public class SwingMovieListEditorView extends JFrame implements MovieListEditorView {
@@ -22,6 +25,7 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
     private JTextField movieField;
     private JComboBox ratingField;
     private JComboBox<Category> categoryField;
+    private JFileChooser fileChooser;
 
     private SwingMovieListEditorView() {
     }
@@ -72,21 +76,23 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
         return (Category)categoryField.getSelectedItem();
     }
 
+    @Override
+    public File chooseFile(String pattern) {
+        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
+            return fileChooser.getSelectedFile();
+        else
+            return null;
+    }
+
     private void init() {
         setTitle();
         setLayout();
+        fileChooser = new JFileChooser();
+        setJMenuBar(initMenuBar());
         getContentPane().add(initListPane());
         getContentPane().add(initDetailPane());
         getContentPane().add(initButtonPane());
-        /*
-        initNameField();
-        initRatingCombo();
-        initCategoryField();
-        initAddButton();
-        initUpdateButton();
-        */
         pack();
-
     }
 
     private void setTitle() {
@@ -95,6 +101,25 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
 
     private void setLayout() {
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+    }
+
+    private JMenuBar initMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+        final JMenuItem saveAsItem = new JMenuItem("Save As...");
+        saveAsItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    editor.saveAs();
+                } catch (IOException ex) {
+                    // TODO: deal with this
+                }
+            }
+        });
+        fileMenu.add(saveAsItem);
+        menuBar.add(fileMenu);
+        return menuBar;
     }
 
     private JPanel initListPane() {
