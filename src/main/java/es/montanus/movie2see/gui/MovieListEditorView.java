@@ -17,5 +17,6 @@ public interface MovieListEditorView {
     int getRatingField();
     void setCategoryField(Category category);
     Category getCategoryField();
-    File chooseFile(String pattern);
+    File chooseSaveFile(String pattern);
+    File chooseOpenFile(String pattern);
 }

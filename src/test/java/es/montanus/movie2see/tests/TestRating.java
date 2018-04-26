@@ -11,6 +11,10 @@ public class TestRating extends TestCase {
         assertEquals(value, rating.getValue());
     }
 
+    public void testMakeRatingFromString() {
+        assertEquals(new Rating(4), Rating.from("4"));
+    }
+
     public static void main(String[] args) {
         junit.textui.TestRunner.run(TestRating.class);
     }

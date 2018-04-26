@@ -26,4 +26,8 @@ public class Rating {
     public int getValue() {
         return value;
     }
+
+    public static Rating from(String string) {
+        return new Rating(Integer.valueOf(string));
+    }
 }

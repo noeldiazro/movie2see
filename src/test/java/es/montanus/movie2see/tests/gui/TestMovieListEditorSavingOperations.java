@@ -7,7 +7,7 @@ import es.montanus.movie2see.tests.FileAssert;
 import java.io.File;
 import java.io.IOException;
 
-public class TestMovieListEditorFileOperations extends BaseTestMovieListEditor {
+public class TestMovieListEditorSavingOperations extends BaseTestMovieListEditor {
 
     private File outputFile;
 
@@ -20,7 +20,7 @@ public class TestMovieListEditorFileOperations extends BaseTestMovieListEditor {
     }
 
     public void testSaving() throws IOException {
-        mockView.chooseFile("*.dat");
+        mockView.chooseSaveFile("*.dat");
         control.setReturnValue(outputFile, 1);
 
         mockView.getNameField();
@@ -51,7 +51,7 @@ public class TestMovieListEditorFileOperations extends BaseTestMovieListEditor {
     }
 
     public void testCancelledSaving() throws IOException {
-        mockView.chooseFile("*.dat");
+        mockView.chooseSaveFile("*.dat");
         control.setReturnValue(null);
 
         control.activate();

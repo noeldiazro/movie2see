@@ -1,7 +1,5 @@
 package es.montanus.movie2see;
 
-import java.util.HashMap;
-
 public class Category {
 
     public static final Category UNCATEGORIZED = new Category("Uncategorized");
@@ -16,6 +14,8 @@ public class Category {
     public static final Category MYSTERY = new Category("Mystery");
     public static final Category THRILLER = new Category("Thriller");
     public static final Category ALL = new Category("All");
+
+    public static final String NO_CATEGORY_MSG = "There is no category for given string";
 
     private final String name;
 
@@ -43,5 +43,12 @@ public class Category {
                 MYSTERY,
                 THRILLER
         };
+    }
+
+    public static Category from(String string) {
+        for (Category category: categories())
+            if (category.toString().equals(string))
+                return category;
+        throw new IllegalArgumentException(NO_CATEGORY_MSG);
     }
 }
