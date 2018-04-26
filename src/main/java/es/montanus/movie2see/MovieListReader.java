@@ -3,23 +3,16 @@ package es.montanus.movie2see;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.UncheckedIOException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class MovieListReader {
     public MovieList readFrom(Reader reader) throws IOException {
         final MovieList result = new MovieList();
-        try (BufferedReader bufferedReader = new BufferedReader(reader)) {
-            while (true) {
-                final String line = bufferedReader.readLine();
-                if (isEndOfFileReached(line))
-                    break;
-                result.add(parseMovie(line));
-            }
-        }
+        for (String line: new MyFileReader(reader))
+            result.add(parseMovie(line));
         return result;
-    }
-
-    private boolean isEndOfFileReached(String line) {
-        return line == null;
     }
 
     private Movie parseMovie(String line) {
@@ -36,5 +29,53 @@ public class MovieListReader {
 
     private boolean hasRate(String string) {
         return !"-1".equals(string);
+    }
+
+    private class MyFileReader implements Iterable<String> {
+        private final BufferedReader reader;
+
+        MyFileReader(Reader reader) {
+            this.reader = new BufferedReader(reader);
+        }
+
+        @Override
+        public Iterator<String> iterator() {
+            return new MyFileReaderIterator();
+        }
+
+        private class MyFileReaderIterator implements Iterator<String> {
+            private String next;
+
+            MyFileReaderIterator() {
+                nextLine();
+            }
+
+            @Override
+            public boolean hasNext() {
+                return !isEndOfFileReached();
+            }
+
+            private boolean isEndOfFileReached() {
+                return next == null;
+            }
+
+            @Override
+            public String next() {
+                if (isEndOfFileReached()) throw new NoSuchElementException();
+
+                String result = next;
+                nextLine();
+                return result;
+            }
+
+            private void nextLine() {
+                try {
+                    next = reader.readLine();
+                }
+                catch (IOException ex) {
+                    throw new UncheckedIOException(ex);
+                }
+            }
+        }
     }
 }
