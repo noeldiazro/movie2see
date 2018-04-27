@@ -8,8 +8,8 @@ public class TestRatedAndCategorizedMovie extends TestMovie {
     private static final int RATING_VALUE = 5;
 
     @Override
-    protected Movie getMovie() {
-        return new Movie.Builder(MOVIE_NAME).
+    protected Movie buildMovie() {
+        return builder.
                 setRating(new Rating(RATING_VALUE)).
                 setCategory(Category.SCIFI).
                 build();

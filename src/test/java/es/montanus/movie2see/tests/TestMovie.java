@@ -6,15 +6,17 @@ import junit.framework.TestCase;
 
 public abstract class TestMovie extends TestCase {
     protected static final String MOVIE_NAME = "Movie Name";
+    protected Movie.Builder builder;
     protected Movie movie;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        movie = getMovie();
+        builder = new Movie.Builder(MOVIE_NAME);
+        movie = buildMovie();
     }
 
-    protected abstract Movie getMovie();
+    protected abstract Movie buildMovie();
 
     public void testName() {
         assertEquals(MOVIE_NAME, movie.getName());

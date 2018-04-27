@@ -8,8 +8,8 @@ public class TestRatedMovie extends TestMovie {
     private static final int RATING_VALUE = 5;
 
     @Override
-    protected Movie getMovie() {
-        return new Movie.Builder(MOVIE_NAME).setRating(new Rating(RATING_VALUE)).build();
+    protected Movie buildMovie() {
+        return builder.setRating(new Rating(RATING_VALUE)).build();
     }
 
     @Override

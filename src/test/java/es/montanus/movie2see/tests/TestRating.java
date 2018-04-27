@@ -15,6 +15,12 @@ public class TestRating extends TestCase {
         assertEquals(new Rating(4), Rating.from("4"));
     }
 
+    public void testCompare() {
+        assertEquals(0, new Rating(4).compareTo(new Rating(4)));
+        assertTrue(new Rating(1).compareTo(new Rating(2)) < 0);
+        assertTrue(new Rating(2).compareTo(new Rating(1)) > 0);
+    }
+
     public static void main(String[] args) {
         junit.textui.TestRunner.run(TestRating.class);
     }

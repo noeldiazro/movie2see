@@ -7,8 +7,8 @@ import es.montanus.movie2see.UnratedException;
 public class TestCategorizedMovie extends TestMovie {
 
     @Override
-    protected Movie getMovie() {
-        return new Movie.Builder(MOVIE_NAME).setCategory(Category.SCIFI).build();
+    protected Movie buildMovie() {
+        return builder.setCategory(Category.SCIFI).build();
     }
 
     @Override

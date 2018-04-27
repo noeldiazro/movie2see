@@ -7,8 +7,8 @@ import es.montanus.movie2see.UnratedException;
 public class TestDefaultMovie extends TestMovie {
 
     @Override
-    protected Movie getMovie() {
-        return new Movie.Builder(MOVIE_NAME).build();
+    protected Movie buildMovie() {
+        return builder.build();
     }
 
     @Override
