@@ -1,8 +1,6 @@
 package es.montanus.movie2see.gui.swing;
 
-import es.montanus.movie2see.Category;
-import es.montanus.movie2see.Movie;
-import es.montanus.movie2see.MovieList;
+import es.montanus.movie2see.*;
 import es.montanus.movie2see.gui.MovieListEditor;
 import es.montanus.movie2see.gui.MovieListEditorView;
 
@@ -111,8 +109,8 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
 
     private JMenuBar initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = getFileMenu();
-        menuBar.add(fileMenu);
+        menuBar.add(getFileMenu());
+        menuBar.add(getViewMenu());
         return menuBar;
     }
 
@@ -154,6 +152,26 @@ public class SwingMovieListEditorView extends JFrame implements MovieListEditorV
         }));
 
         return fileMenu;
+    }
+
+    private JMenu getViewMenu() {
+        final JMenu viewMenu = new JMenu("View");
+
+        viewMenu.add(getMenuItem("Sort by name", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editor.sortUsing(new MovieNameComparator());
+            }
+        }));
+
+        viewMenu.add(getMenuItem("Sort by rating", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editor.sortUsing(new MovieRatingComparator());
+            }
+        }));
+
+        return viewMenu;
     }
 
     private JMenuItem getMenuItem(String text, ActionListener actionListener) {
