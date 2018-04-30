@@ -3,6 +3,7 @@ package es.montanus.movie2see;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
@@ -97,4 +98,7 @@ public class MovieList {
         destination.flush();
     }
 
+    public void sortUsing(Comparator<Movie> comparator) {
+        movies.sort(comparator);
+    }
 }
