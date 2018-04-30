@@ -3,6 +3,7 @@ package es.montanus.movie2see.gui;
 import es.montanus.movie2see.*;
 
 import java.io.*;
+import java.util.Comparator;
 
 public class MovieListEditor {
 
@@ -110,6 +111,11 @@ public class MovieListEditor {
     public void open() throws IOException {
         MovieListReader reader = new MovieListReader();
         movieList = reader.readFrom(new FileReader(view.chooseOpenFile("*.dat")));
+        updateMovieList();
+    }
+
+    public void sortUsing(Comparator<Movie> comparator) {
+        movieList.sortUsing(comparator);
         updateMovieList();
     }
 }
