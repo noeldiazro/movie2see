@@ -21,10 +21,22 @@ public class MovieListReader {
         Movie.Builder builder = new Movie.Builder(strings[0]).
                 setCategory(Category.from(strings[1]));
 
-        if (hasRate(strings[2]))
+        if (hasRate(strings[2])) {
             builder.setRating(Rating.from(strings[2]));
 
-        return builder.build();
+        }
+
+        final Movie movie = builder.build();
+
+        addRatings(movie, Integer.valueOf(strings[3]));
+
+        return movie;
+    }
+
+    private void addRatings(Movie movie, int numberOfRatings) {
+        for (int i=1; i < numberOfRatings; i++) {
+            movie.addRating(new Rating(0));
+        }
     }
 
     private boolean hasRate(String string) {

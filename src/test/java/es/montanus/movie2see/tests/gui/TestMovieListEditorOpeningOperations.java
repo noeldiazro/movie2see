@@ -19,9 +19,9 @@ public class TestMovieListEditorOpeningOperations extends BaseTestMovieListEdito
         super.setUp();
         inputFile = File.createTempFile("opening", "dat");
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(inputFile))) {
-            bufferedWriter.write("The Princess Bride|Fantasy|4\n");
-            bufferedWriter.write("The Shining|Horror|-1\n");
-            bufferedWriter.write("Jurasic Park|Uncategorized|1\n");
+            bufferedWriter.write("The Princess Bride|Fantasy|4|2\n");
+            bufferedWriter.write("The Shining|Horror|-1|0\n");
+            bufferedWriter.write("Jurasic Park|Uncategorized|1|1\n");
         }
     }
 

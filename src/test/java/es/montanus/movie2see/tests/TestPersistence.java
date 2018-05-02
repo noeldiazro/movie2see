@@ -30,13 +30,13 @@ public class TestPersistence extends TestCase {
     public void testWritingOneMovie() throws IOException {
         movieList.add(new Movie.Builder("Star Wars").setCategory(Category.SCIFI).setRating(new Rating(4)).build());
         movieList.writeTo(destination);
-        assertWrites("Star Wars|Science Fiction|4\n");
+        assertWrites("Star Wars|Science Fiction|4|1\n");
     }
 
     public void testWritingOneMovieWithoutRating() throws IOException {
         movieList.add(new Movie.Builder("Star Wars").setCategory(Category.SCIFI).build());
         movieList.writeTo(destination);
-        assertWrites("Star Wars|Science Fiction|-1\n");
+        assertWrites("Star Wars|Science Fiction|-1|0\n");
     }
 
     public void testWritingMultipleMovies() throws IOException {
@@ -44,8 +44,8 @@ public class TestPersistence extends TestCase {
         movieList.add(new Movie.Builder("Star Trek").build());
         movieList.writeTo(destination);
         assertWrites(
-                "Star Wars|Science Fiction|4\n" +
-                "Star Trek|Uncategorized|-1\n"
+                "Star Wars|Science Fiction|4|1\n" +
+                "Star Trek|Uncategorized|-1|0\n"
         );
     }
 

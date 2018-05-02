@@ -26,14 +26,14 @@ public class TestMovieListReader extends TestCase {
     }
 
     public void testReadOneBasicMovie() throws IOException {
-        MovieList movieList = movieListReader.readFrom(new StringReader("Star Wars|Science Fiction|4\n"));
+        MovieList movieList = movieListReader.readFrom(new StringReader("Star Wars|Science Fiction|4|1\n"));
 
         assertEquals(1, movieList.size());
         assertRatedMovie(movieList.get(0), "Star Wars", Category.SCIFI, new Rating(4));
     }
 
     public void testReadOneUncategorizedMovie() throws IOException {
-        MovieList movieList = movieListReader.readFrom(new StringReader("Star Trek|Uncategorized|3\n"));
+        MovieList movieList = movieListReader.readFrom(new StringReader("Star Trek|Uncategorized|3|1\n"));
 
         assertEquals(1, movieList.size());
         assertRatedMovie(movieList.get(0), "Star Trek", Category.UNCATEGORIZED, new Rating(3));
@@ -47,7 +47,7 @@ public class TestMovieListReader extends TestCase {
     }
 
     public void testReadOneUnratedMovie() throws IOException {
-        MovieList movieList = movieListReader.readFrom(new StringReader("The Fellowship of The Ring|Fantasy|-1\n"));
+        MovieList movieList = movieListReader.readFrom(new StringReader("The Fellowship of The Ring|Fantasy|-1|0\n"));
 
         assertEquals(1, movieList.size());
         assertUnratedMovie(movieList.get(0), "The Fellowship of The Ring", Category.FANTASY);
@@ -60,14 +60,14 @@ public class TestMovieListReader extends TestCase {
     }
 
     public void testReadMultipleMovies() throws IOException {
-        String input = "Star Wars|Science Fiction|4\n" +
-                "Star Trek|Uncategorized|3\n" +
-                "The Fellowship of The Ring|Fantasy|-1\n";
+        String input = "Star Wars|Science Fiction|4|2\n" +
+                "Star Trek|Uncategorized|3|1\n" +
+                "The Fellowship of The Ring|Fantasy|-1|0\n";
 
         MovieList movieList = movieListReader.readFrom(new StringReader(input));
 
         assertEquals(3, movieList.size());
-        assertRatedMovie(movieList.get(0), "Star Wars", Category.SCIFI, new Rating(4));
+        assertRatedMovie(movieList.get(0), "Star Wars", Category.SCIFI, new Rating(2));
         assertRatedMovie(movieList.get(1), "Star Trek", Category.UNCATEGORIZED, new Rating(3));
         assertUnratedMovie(movieList.get(2), "The Fellowship of The Ring", Category.FANTASY);
     }

@@ -11,10 +11,12 @@ public class Movie {
     private String name;
     private Rating rating;
     private Category category;
+    private int numberOfRatings = 0;
 
     private Movie(Builder builder) {
         setName(builder.name);
-        this.rating = builder.rating;
+        if (builder.rating != null)
+            setRating(builder.rating);
         setCategory(builder.category);
     }
 
@@ -75,17 +77,18 @@ public class Movie {
     }
 
     public boolean isRated() {
-        return rating != null;
+        return numberOfRatings > 0;
     }
 
     public Rating getRating() {
         if (!isRated())
             throw new UnratedException(getName());
-        return rating;
+        return new Rating(rating.getValue() / numberOfRatings);
     }
 
     public void setRating(Rating rating) {
         this.rating = rating;
+        numberOfRatings = 1;
     }
 
     public Category getCategory() {
@@ -105,11 +108,22 @@ public class Movie {
             destination.write(Integer.toString(getRating().getValue()));
         else
             destination.write("-1");
+        writeSeparator(destination);
+        destination.write(Integer.toString(numberOfRatings));
         destination.write('\n');
     }
 
     private void writeSeparator(Writer destination) throws IOException {
         destination.write('|');
+    }
+
+    public void addRating(Rating rating) {
+        if (!isRated())
+            setRating(rating);
+        else {
+            this.rating = new Rating(this.rating.getValue() + rating.getValue());
+            numberOfRatings++;
+        }
     }
 
     public static class Builder {

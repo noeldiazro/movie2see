@@ -35,4 +35,9 @@ public class Rating implements Comparable<Rating> {
     public int compareTo(Rating that) {
         return this.value - that.value;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Value: %d", getValue());
+    }
 }

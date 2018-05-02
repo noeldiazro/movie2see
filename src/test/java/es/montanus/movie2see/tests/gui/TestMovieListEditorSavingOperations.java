@@ -34,8 +34,8 @@ public class TestMovieListEditorSavingOperations extends BaseTestMovieListEditor
         MovieListEditor editor = new MovieListEditor(getMovieList(), mockView);
         assertTrue(editor.saveAs());
         final String expectedBeforeAdding =
-                "Star Wars|Science Fiction|5\n" +
-                "Star Trek|Uncategorized|-1\n";
+                "Star Wars|Science Fiction|5|1\n" +
+                "Star Trek|Uncategorized|-1|0\n";
         FileAssert.assertSize(expectedBeforeAdding.length(), outputFile);
         FileAssert.assertEquals(expectedBeforeAdding, outputFile);
 
@@ -44,7 +44,7 @@ public class TestMovieListEditorSavingOperations extends BaseTestMovieListEditor
         assertTrue(editor.save());
         final String expectedAfterAdding =
                 expectedBeforeAdding +
-                "The Fellowship of The Ring|Fantasy|5\n";
+                "The Fellowship of The Ring|Fantasy|5|1\n";
         FileAssert.assertSize(expectedAfterAdding.length(), outputFile);
         FileAssert.assertEquals(expectedAfterAdding, outputFile);
         control.verify();
