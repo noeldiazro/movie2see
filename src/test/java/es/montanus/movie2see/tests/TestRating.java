@@ -21,6 +21,19 @@ public class TestRating extends TestCase {
         assertTrue(new Rating(2).compareTo(new Rating(1)) > 0);
     }
 
+    public void testAnonymousRating() {
+        Rating rating = new Rating(3);
+        assertEquals("Anonymous", rating.getSource());
+    }
+
+    public void testRatingWithSource() {
+        final int value = 3;
+        final String source = "NY Times";
+        Rating rating = new Rating(value, source);
+        assertEquals(value, rating.getValue());
+        assertEquals(source, rating.getSource());
+    }
+
     public static void main(String[] args) {
         junit.textui.TestRunner.run(TestRating.class);
     }

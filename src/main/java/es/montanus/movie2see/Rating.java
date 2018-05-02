@@ -3,9 +3,15 @@ package es.montanus.movie2see;
 public class Rating implements Comparable<Rating> {
 
     private final int value;
+    private final String source;
 
     public Rating(int value) {
+        this(value, "Anonymous");
+    }
+
+    public Rating(int value, String source) {
         this.value = value;
+        this.source = source;
     }
 
     @Override
@@ -39,5 +45,9 @@ public class Rating implements Comparable<Rating> {
     @Override
     public String toString() {
         return String.format("Value: %d", getValue());
+    }
+
+    public String getSource() {
+        return source;
     }
 }

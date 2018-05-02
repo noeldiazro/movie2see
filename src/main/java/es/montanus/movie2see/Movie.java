@@ -9,14 +9,13 @@ public class Movie {
     public static final String NULL_CATEGORY_MSG = "Category can't be null";
 
     private String name;
-    private Rating rating;
     private Category category;
-    private int numberOfRatings = 0;
+    private RatingList ratings = new RatingList();
 
     private Movie(Builder builder) {
         setName(builder.name);
         if (builder.rating != null)
-            setRating(builder.rating);
+            ratings.add(builder.rating);
         setCategory(builder.category);
     }
 
@@ -77,18 +76,17 @@ public class Movie {
     }
 
     public boolean isRated() {
-        return numberOfRatings > 0;
+        return !ratings.isEmpty();
     }
 
     public Rating getRating() {
         if (!isRated())
             throw new UnratedException(getName());
-        return new Rating(rating.getValue() / numberOfRatings);
+        return ratings.getAverageRating();
     }
 
     public void setRating(Rating rating) {
-        this.rating = rating;
-        numberOfRatings = 1;
+        addRating(rating);
     }
 
     public Category getCategory() {
@@ -109,7 +107,7 @@ public class Movie {
         else
             destination.write("-1");
         writeSeparator(destination);
-        destination.write(Integer.toString(numberOfRatings));
+        destination.write(Integer.toString(ratings.size()));
         destination.write('\n');
     }
 
@@ -118,12 +116,7 @@ public class Movie {
     }
 
     public void addRating(Rating rating) {
-        if (!isRated())
-            setRating(rating);
-        else {
-            this.rating = new Rating(this.rating.getValue() + rating.getValue());
-            numberOfRatings++;
-        }
+        ratings.add(rating);
     }
 
     public static class Builder {
