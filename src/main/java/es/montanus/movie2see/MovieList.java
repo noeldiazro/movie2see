@@ -2,12 +2,9 @@ package es.montanus.movie2see;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
-public class MovieList {
+public class MovieList implements Iterable<Movie> {
     public static final String NULL_CATEGORY_MSG = "Category can't be null";
     private List<Movie> movies = new ArrayList<Movie>();
 
@@ -92,7 +89,7 @@ public class MovieList {
         return movies.hashCode();
     }
 
-    public void writeTo(Writer destination) throws IOException {
+    private void writeTo(Writer destination) throws IOException {
         for (Movie movie: movies)
             movie.writeTo(destination);
         destination.flush();
@@ -100,5 +97,10 @@ public class MovieList {
 
     public void sortUsing(Comparator<Movie> comparator) {
         movies.sort(comparator);
+    }
+
+    @Override
+    public Iterator<Movie> iterator() {
+        return movies.iterator();
     }
 }

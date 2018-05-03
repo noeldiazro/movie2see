@@ -19,9 +19,23 @@ public class TestMovieListEditorOpeningOperations extends BaseTestMovieListEdito
         super.setUp();
         inputFile = File.createTempFile("opening", "dat");
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(inputFile))) {
-            bufferedWriter.write("The Princess Bride|Fantasy|4|2\n");
-            bufferedWriter.write("The Shining|Horror|-1|0\n");
-            bufferedWriter.write("Jurasic Park|Uncategorized|1|1\n");
+            bufferedWriter.write("<movielist>");
+
+            bufferedWriter.write("<movie name=\"The Princess Bride\" category=\"Fantasy\">");
+            bufferedWriter.write("<ratings>");
+            bufferedWriter.write("<rating value=\"4\" source=\"Anonymous\" />");
+            bufferedWriter.write("</ratings>");
+            bufferedWriter.write("</movie>");
+
+            bufferedWriter.write("<movie name=\"The Shining\" category=\"Horror\" />");
+
+            bufferedWriter.write("<movie name=\"Jurasic Park\" category=\"Uncategorized\">");
+            bufferedWriter.write("<ratings>");
+            bufferedWriter.write("<rating value=\"1\" source=\"NY Times\" />");
+            bufferedWriter.write("</ratings>");
+            bufferedWriter.write("</movie>");
+
+            bufferedWriter.write("</movielist>");
         }
     }
 
@@ -37,9 +51,14 @@ public class TestMovieListEditorOpeningOperations extends BaseTestMovieListEdito
 
     private Vector<Movie> getExpectedMoviesAfterOpen() {
         Vector<Movie> result = new Vector<>();
-        result.add(new Movie.Builder("The Princess Bride").setCategory(Category.FANTASY).setRating(new Rating(4)).build());
-        result.add(new Movie.Builder("The Shining").setCategory(Category.HORROR).build());
-        result.add(new Movie.Builder("Jurasic Park").setRating(new Rating(1)).build());
+        final Movie princessBride = new Movie.Builder("The Princess Bride").setCategory(Category.FANTASY).build();
+        princessBride.addRating(new Rating(4));
+        final Movie theShining = new Movie.Builder("The Shining").setCategory(Category.HORROR).build();
+        final Movie jurasicPark = new Movie.Builder("Jurasic Park").build();
+        jurasicPark.addRating(new Rating(1, "NY Times"));
+        result.add(princessBride);
+        result.add(theShining);
+        result.add(jurasicPark);
         return result;
     }
 }

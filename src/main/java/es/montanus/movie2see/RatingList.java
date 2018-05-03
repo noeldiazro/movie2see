@@ -1,6 +1,7 @@
 package es.montanus.movie2see;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class RatingList {
@@ -34,5 +35,9 @@ public class RatingList {
         for (Rating rating: ratings)
             total += rating.getValue();
         return total / size();
+    }
+
+    public Iterator<Rating> iterator() {
+        return ratings.iterator();
     }
 }

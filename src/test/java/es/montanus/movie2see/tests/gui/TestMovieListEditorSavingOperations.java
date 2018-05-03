@@ -33,18 +33,35 @@ public class TestMovieListEditorSavingOperations extends BaseTestMovieListEditor
         control.activate();
         MovieListEditor editor = new MovieListEditor(getMovieList(), mockView);
         assertTrue(editor.saveAs());
-        final String expectedBeforeAdding =
-                "Star Wars|Science Fiction|5|1\n" +
-                "Star Trek|Uncategorized|-1|0\n";
+        final String expectedBeforeAdding = "<movielist>" +
+                "<movie name=\"Star Wars\" category=\"Science Fiction\">" +
+                "<ratings>" +
+                "<rating value=\"5\" source=\"Anonymous\" />" +
+                "</ratings>" +
+                "</movie>" +
+                "<movie name=\"Star Trek\" category=\"Uncategorized\">" +
+                "</movie>" +
+                "</movielist>";
         FileAssert.assertSize(expectedBeforeAdding.length(), outputFile);
         FileAssert.assertEquals(expectedBeforeAdding, outputFile);
 
         editor.add();
 
         assertTrue(editor.save());
-        final String expectedAfterAdding =
-                expectedBeforeAdding +
-                "The Fellowship of The Ring|Fantasy|5|1\n";
+        final String expectedAfterAdding = "<movielist>" +
+                "<movie name=\"Star Wars\" category=\"Science Fiction\">" +
+                "<ratings>" +
+                "<rating value=\"5\" source=\"Anonymous\" />" +
+                "</ratings>" +
+                "</movie>" +
+                "<movie name=\"Star Trek\" category=\"Uncategorized\">" +
+                "</movie>" +
+                "<movie name=\"The Fellowship of The Ring\" category=\"Fantasy\">" +
+                "<ratings>" +
+                "<rating value=\"5\" source=\"Anonymous\" />" +
+                "</ratings>" +
+                "</movie>" +
+                "</movielist>";
         FileAssert.assertSize(expectedAfterAdding.length(), outputFile);
         FileAssert.assertEquals(expectedAfterAdding, outputFile);
         control.verify();

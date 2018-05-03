@@ -104,13 +104,14 @@ public class MovieListEditor {
 
     private void tryListWriting(File outputFile) throws IOException {
         try (FileWriter writer = new FileWriter(outputFile)) {
-            movieList.writeTo(writer);
+            MovieListWriter movieListWriter = new XMLMovieListWriter(writer);
+            movieListWriter.write(movieList);
         }
     }
 
     public void open() throws IOException {
-        MovieListReader reader = new MovieListReader();
-        movieList = reader.readFrom(new FileReader(view.chooseOpenFile("*.dat")));
+        final FileReader source = new FileReader(view.chooseOpenFile("*.dat"));
+        movieList = new XMLMovieListReader(source).read();
         updateMovieList();
     }
 

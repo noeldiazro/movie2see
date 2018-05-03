@@ -2,8 +2,9 @@ package es.montanus.movie2see;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Iterator;
 
-public class Movie {
+public class Movie implements Iterable<Rating> {
     public static final String NULL_NAME_MSG = "Movie name can't be null";
     public static final String EMPTY_NAME_MSG = "Movie name can't be empty";
     public static final String NULL_CATEGORY_MSG = "Category can't be null";
@@ -117,6 +118,11 @@ public class Movie {
 
     public void addRating(Rating rating) {
         ratings.add(rating);
+    }
+
+    @Override
+    public Iterator<Rating> iterator() {
+        return ratings.iterator();
     }
 
     public static class Builder {
